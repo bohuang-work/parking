@@ -62,13 +62,16 @@ def get_free_parking_slots(db: Session = Depends(get_db)):
 
     return free_slots
 
+
 @router.get(
     "/parking-slots/free/count",
     response_model=int,
     tags=["Parking Slots"],
 )
 def get_number_of_free_parking_slots(db: Session = Depends(get_db)):
-    free_slots_count = db.query(ParkingSlotsDB).filter(ParkingSlotsDB.is_free == True).count()
+    free_slots_count = (
+        db.query(ParkingSlotsDB).filter(ParkingSlotsDB.is_free == True).count()
+    )
 
     return free_slots_count
 
@@ -91,7 +94,7 @@ def get_parking_slot_by_id(slot_id: int, db: Session = Depends(get_db)):
 @router.post("/cars/create", response_model=dict, tags=["Cars"])
 def create_car(car: CarPostRequest, db: Session = Depends(get_db)):
     # check if the car already exists by license plate
-    if  db.query(CarsDB).filter(CarsDB.license_plate == car.license_plate).first():
+    if db.query(CarsDB).filter(CarsDB.license_plate == car.license_plate).first():
         return {"message": "Car already exists"}
     else:
         new_car: CarsDB = CarsDB(**car.model_dump())
@@ -126,11 +129,13 @@ def create_ticket(ticket: TicketPostRequest, db: Session = Depends(get_db)):
     )
     if not parking_slot or not parking_slot.is_free:
         raise HTTPException(status_code=400, detail="Parking slot is not free")
-    
+
     # Find the car id by license plate
     car = db.query(CarsDB).filter(CarsDB.license_plate == ticket.license_plate).first()
     if not car:
-        raise HTTPException(status_code=404, detail="Car not registered, please register the car first")
+        raise HTTPException(
+            status_code=404, detail="Car not registered, please register the car first"
+        )
 
     # Create a new Ticket object
     new_ticket: TicketsDB = TicketsDB(
@@ -148,12 +153,13 @@ def create_ticket(ticket: TicketPostRequest, db: Session = Depends(get_db)):
     parking_slot.license_plate = ticket.license_plate
     db.commit()
 
-    return {"message": f"Ticket created successfully, ticket id: {new_ticket.id}, car parked at slot: {parking_slot.slot_number}"}
+    return {
+        "message": f"Ticket created successfully, ticket id: {new_ticket.id}, car parked at slot: {parking_slot.slot_number}"
+    }
+
 
 # Endpoint to get a ticket by ID
-@router.get(
-    "/tickets/{ticket_id}", response_model=TicketGetResponse, tags=["Tickets"]
-)
+@router.get("/tickets/{ticket_id}", response_model=TicketGetResponse, tags=["Tickets"])
 def get_ticket_by_id(ticket_id: int, db: Session = Depends(get_db)):
     ticket = db.query(TicketsDB).filter(TicketsDB.id == ticket_id).first()
 
@@ -170,7 +176,7 @@ def pay_ticket(ticket_id: int, db: Session = Depends(get_db)):
 
     if not ticket:
         raise HTTPException(status_code=404, detail="Ticket not found")
-    
+
     # check if the ticket has already been paid
     if ticket.paid:
         return {"message": "Ticket has already been paid"}
@@ -191,7 +197,9 @@ def pay_ticket(ticket_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     # calculate the total time spent in the parking
-    total_hours = math.ceil((ticket.exit_time - ticket.entry_time).total_seconds() / 3600)
+    total_hours = math.ceil(
+        (ticket.exit_time - ticket.entry_time).total_seconds() / 3600
+    )
     price = total_hours * 5
 
     # update ticket as paid
@@ -199,6 +207,7 @@ def pay_ticket(ticket_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Ticket paid successfully", "Price": f"{price} Euro"}
+
 
 # Endpoint to cancel a ticket
 @router.delete("/tickets/cancel/{ticket_id}", response_model=dict, tags=["Tickets"])

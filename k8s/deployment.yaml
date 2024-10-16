@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parking-app
+  labels:
+    app: parking-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parking-app
+  template:
+    metadata:
+      labels:
+        app: parking-app
+    spec:
+      containers:
+        - name: parking-container
+          image: bohuang910407/fastapi-parking:latest # Use the local registry image
+          ports:
+            - containerPort: 8000 # Exposing port 8000 since FastAPI runs on this port
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: parking-service
+spec:
+  type: LoadBalancer # Use LoadBalancer or NodePort based on your k3d setup
+  ports:
+    - port: 80 # External port to access the service
+      targetPort: 8000 # The port where the FastAPI app is listening inside the container
+  selector:
+    app: parking-app
