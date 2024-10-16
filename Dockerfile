@@ -17,7 +17,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copy the FastAPI application code to the container
 COPY main.py /app
-COPY db_seeds.py /app
 COPY src/ /app/src
 
 # Expose the port FastAPI runs on
