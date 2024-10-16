@@ -28,3 +28,12 @@ RESTful-api implemented using Fast-API framework:
 
 - `docker build -t app .`
 - `docker run -d -p 8000:8000 app`
+
+## Run AWS
+
+`docker run -d --name parking-app -p 80:8000 \
+    -e DB_USERNAME="dbadmin" \
+    -e DB_PASSWORD="adminAdmin123!" \
+    -e DB_ENDPOINT="parking-db.ch24acy4ksfc.eu-central-1.rds.amazonaws.com" \
+    -e DB_NAME="parkingdb" \
+    bohuang910407/fastapi-parking:latest`
