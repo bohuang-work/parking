@@ -38,5 +38,5 @@ sudo usermod -aG docker ubuntu
 # Pull the Docker image for the FastAPI app using the variable
 sudo docker pull $DOCKER_IMAGE
 
-# Run the FastAPI app container using the variable
-sudo docker run -d --name parking-app -p 80:8000 $DOCKER_IMAGE
+# # Run the FastAPI app container using the variable
+# sudo docker run -d --name parking-app -p 80:8000 $DOCKER_IMAGE

@@ -5,14 +5,29 @@ from sqlmodel import SQLModel
 from datetime import UTC, datetime
 from enum import Enum
 import sqlmodel as sm
+import os
 
+### Local
+# SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"  # Using SQLite for simplicity
+# engine = create_engine(
+#     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+# )
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"  # Using SQLite for simplicity
+### AWS
+# Use environment variables to get the database connection URL
+DB_USERNAME = os.getenv("DB_USERNAME", "admin")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "adminAdmin123!")  # Update this to your password
+DB_ENDPOINT = os.getenv(
+    "DB_ENDPOINT", "your-rds-endpoint"
+)  # Change this to your RDS endpoint
+DB_NAME = os.getenv("DB_NAME", "parkingdb")
+
+SQLALCHEMY_DATABASE_URL = (
+    f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_ENDPOINT}:5432/{DB_NAME}"
+)
 
 # Set up the database engine
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # Create a session maker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
