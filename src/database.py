@@ -7,13 +7,13 @@ from enum import Enum
 import sqlmodel as sm
 import os
 
-### Local
+### 1 .Local
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"  # Using SQLite for simplicity
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 # )
 
-### AWS
+### 2. AWS
 # Use environment variables to get the database connection URL
 DB_USERNAME = os.getenv("DB_USERNAME", "admin")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "adminAdmin123!")  # Update this to your password
@@ -29,6 +29,7 @@ SQLALCHEMY_DATABASE_URL = (
 # Set up the database engine
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
+### 3. Set up Local Session
 # Create a session maker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
