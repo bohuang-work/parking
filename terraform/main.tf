@@ -187,3 +187,31 @@ resource "aws_db_instance" "postgres" {
     Name = "parking_db"
   }
 }
+
+# Create the HTTP API Gateway
+resource "aws_apigatewayv2_api" "parking_http_api" {
+  name          = "parking-http-api"
+  protocol_type = "HTTP"  # HTTP API type
+}
+
+# Create the integration with EC2 instance (forward to EC2)
+resource "aws_apigatewayv2_integration" "parking_http_integration" {
+  api_id           = aws_apigatewayv2_api.parking_http_api.id
+  integration_type = "HTTP_PROXY"
+  integration_uri  = "http://${aws_instance.parking_instance.public_ip}:80/{proxy}"  # Forward requests to EC2
+  integration_method = "ANY"
+}
+
+# Create the default route to proxy all requests
+resource "aws_apigatewayv2_route" "proxy_route" {
+  api_id    = aws_apigatewayv2_api.parking_http_api.id
+  route_key = "ANY /{proxy+}"  # This will match all paths
+  target    = "integrations/${aws_apigatewayv2_integration.parking_http_integration.id}"
+}
+
+# Create a stage (default stage for production use)
+resource "aws_apigatewayv2_stage" "default_stage" {
+  api_id      = aws_apigatewayv2_api.parking_http_api.id
+  name        = "$default"  # Default stage
+  auto_deploy = true  # Automatically deploy the changes
+}
