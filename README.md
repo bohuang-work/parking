@@ -4,6 +4,8 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-3.36.0-brightgreen?style=for-the-badge)
+![AWS](https://img.shields.io/badge/AWS-Cloud-brightgreen?style=for-the-badge)
+![Terraform](https://img.shields.io/badge/Terraform-1.5.5-brightgreen?style=for-the-badge)
 
 ## Introduction
 
@@ -23,13 +25,15 @@ RESTful-api implemented using Fast-API framework:
 - Pydantic
 - SQLAlchemy
 - Sqlmodel
+- AWS
+- Terraform
 
 ## Run
 
 - `docker build -t app .`
 - `docker run -d -p 8000:8000 app`
 
-## Run AWS
+## Run APP in EC2
 
 `docker run -d --name parking-app -p 80:8000 \
     -e DB_USERNAME="dbadmin" \
