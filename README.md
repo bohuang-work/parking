@@ -5,7 +5,6 @@
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-3.36.0-brightgreen?style=for-the-badge)
 ![AWS](https://img.shields.io/badge/AWS-Cloud-brightgreen?style=for-the-badge)
-
 ![Terraform](https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white)
 
 ## Introduction
@@ -31,7 +30,7 @@ RESTful-api implemented using Fast-API framework:
 - AWS
 - Terraform
 
-## run with Docker
+## Run with Docker
 
 - `docker build -t app .`
 - `docker run -d -p 8000:8000 app`
