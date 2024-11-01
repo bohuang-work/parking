@@ -19,8 +19,12 @@ if DATABASE_ENV == "local":
 else:
     # AWS PostgreSQL database configuration using environment variables
     DB_USERNAME = os.getenv("DB_USERNAME", "dbadmin")
-    DB_PASSWORD = os.getenv("DB_PASSWORD", "adminAdmin123!")  # Update this to your password
-    DB_ENDPOINT = os.getenv("DB_ENDPOINT", "your-rds-endpoint")  # Change this to your RDS endpoint
+    DB_PASSWORD = os.getenv(
+        "DB_PASSWORD", "adminAdmin123!"
+    )  # Update this to your password
+    DB_ENDPOINT = os.getenv(
+        "DB_ENDPOINT", "your-rds-endpoint"
+    )  # Change this to your RDS endpoint
     DB_NAME = os.getenv("DB_NAME", "parkingdb")
 
     SQLALCHEMY_DATABASE_URL = (
