@@ -45,6 +45,7 @@ RESTful-api implemented using Fast-API framework:
 
 ```shell
 docker run -d --name parking-app -p 80:8000 \
+-e DATABASE_ENV="aws" \
 -e DB_USERNAME="dbadmin" \
 -e DB_PASSWORD="adminAdmin123!" \
 -e DB_ENDPOINT="parking-db.ch24acy4ksfc.eu-central-1.rds.amazonaws.com" \

@@ -7,27 +7,26 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import SQLModel
 
-# ### 1 .Local
-# SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"  # Using SQLite for simplicity
-# engine = create_engine(
-#     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-# )
+# Define the environment variable to determine the database environment
+DATABASE_ENV = os.getenv("DATABASE_ENV", "local")  # Default to "local"
 
-### 2. AWS
-# Use environment variables to get the database connection URL
-DB_USERNAME = os.getenv("DB_USERNAME", "dbadmin")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "adminAdmin123!")  # Update this to your password
-DB_ENDPOINT = os.getenv(
-    "DB_ENDPOINT", "your-rds-endpoint"
-)  # Change this to your RDS endpoint
-DB_NAME = os.getenv("DB_NAME", "parkingdb")
+if DATABASE_ENV == "local":
+    # Local SQLite database configuration
+    SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"  # Using SQLite for simplicity
+    engine = create_engine(
+        SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    )
+else:
+    # AWS PostgreSQL database configuration using environment variables
+    DB_USERNAME = os.getenv("DB_USERNAME", "dbadmin")
+    DB_PASSWORD = os.getenv("DB_PASSWORD", "adminAdmin123!")  # Update this to your password
+    DB_ENDPOINT = os.getenv("DB_ENDPOINT", "your-rds-endpoint")  # Change this to your RDS endpoint
+    DB_NAME = os.getenv("DB_NAME", "parkingdb")
 
-SQLALCHEMY_DATABASE_URL = (
-    f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_ENDPOINT}:5432/{DB_NAME}"
-)
-
-# Set up the database engine
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+    SQLALCHEMY_DATABASE_URL = (
+        f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_ENDPOINT}:5432/{DB_NAME}"
+    )
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 ### 3. Set up Local Session
 # Create a session maker

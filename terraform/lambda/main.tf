@@ -215,10 +215,11 @@ resource "aws_lambda_function" "parking_lambda" {
 
   environment {
     variables = {
-      DB_ENDPOINT = aws_db_instance.postgres.address
-      DB_NAME     = aws_db_instance.postgres.db_name
-      DB_USERNAME = "dbadmin"
-      DB_PASSWORD = "adminAdmin123!"
+      DATABASE_ENV = "aws"
+      DB_ENDPOINT  = aws_db_instance.postgres.address
+      DB_NAME      = aws_db_instance.postgres.db_name
+      DB_USERNAME  = "dbadmin"
+      DB_PASSWORD  = "adminAdmin123!"
     }
   }
 
