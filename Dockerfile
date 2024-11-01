@@ -16,8 +16,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy the FastAPI application code to the container
-COPY main.py /app
-COPY src/ /app/src
+COPY main.py endpoints.py models.py database.py /app
 
 # Expose the port FastAPI runs on
 EXPOSE 8000

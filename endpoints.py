@@ -1,23 +1,18 @@
+import math
 from datetime import datetime, timezone
 from typing import List
-import math
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from src.database import get_db
-from src.models import (
+from database import CarsDB, ParkingSlotsDB, TicketsDB, get_db
+from models import (
+    CarGetResponse,
+    CarPostRequest,
     ParkingSlotGetResponse,
     ParkingSlotPostRequest,
-    CarPostRequest,
-    CarGetResponse,
-    TicketPostRequest,
     TicketGetResponse,
-)
-from src.database import (
-    ParkingSlotsDB,
-    CarsDB,
-    TicketsDB,
+    TicketPostRequest,
 )
 
 # Create an APIRouter instance
@@ -25,7 +20,7 @@ router = APIRouter()
 
 
 # Health Check Endpoint
-@router.get("/health", tags=["Health"])
+@router.get("/", tags=["Health"])
 def health_check():
     return {"status": "ok!"}
 

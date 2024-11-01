@@ -1,13 +1,13 @@
+import os
+from datetime import UTC, datetime
+from enum import Enum
+
+import sqlmodel as sm
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import SQLModel
 
-from datetime import UTC, datetime
-from enum import Enum
-import sqlmodel as sm
-import os
-
-### 1 .Local
+# ### 1 .Local
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"  # Using SQLite for simplicity
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -15,7 +15,7 @@ import os
 
 ### 2. AWS
 # Use environment variables to get the database connection URL
-DB_USERNAME = os.getenv("DB_USERNAME", "admin")
+DB_USERNAME = os.getenv("DB_USERNAME", "dbadmin")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "adminAdmin123!")  # Update this to your password
 DB_ENDPOINT = os.getenv(
     "DB_ENDPOINT", "your-rds-endpoint"

@@ -1,10 +1,9 @@
-from datetime import UTC, datetime
-from enum import Enum
+from datetime import datetime
 from typing import List, Optional
 
-import sqlmodel as sm
 from pydantic import BaseModel
-from src.database import CarsDB, ParkingSlotsDB, TicketsDB
+
+from database import TicketsDB
 
 
 ### 1. ParkingSlot API models

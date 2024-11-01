@@ -1,5 +1,7 @@
 from fastapi import FastAPI
-from src.endpoints import router as parking_router
+from mangum import Mangum
+
+from endpoints import router as parking_router
 
 # App Config
 app = FastAPI(
@@ -7,6 +9,8 @@ app = FastAPI(
     description="API for parking system",
     version="1.0.0",
 )
+
+handler = Mangum(app)
 
 # Endpoints
 app.include_router(parking_router)
