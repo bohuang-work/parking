@@ -70,3 +70,14 @@ def test_get_free_parking_slots():
     assert all(
         slot["is_free"] is True for slot in free_slots
     )  # Ensure all returned slots are free
+
+
+# Test for Getting Count of Free Parking Slots
+def test_get_count_of_free_parking_slots():
+
+    # Test the count endpoint
+    response = client.get("/parking-slots/free/count")
+
+    assert response.status_code == 200
+    free_slots_count = response.json()
+    assert free_slots_count == 2  # Expecting 2 free slots
