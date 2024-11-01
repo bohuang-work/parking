@@ -32,7 +32,6 @@ else:
     )
     engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-### 3. Set up Local Session
 # Create a session maker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
