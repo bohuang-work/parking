@@ -35,7 +35,7 @@ RESTful-api implemented using Fast-API framework:
 - `docker build -t app .`
 - `docker run -d -p 8000:8000 app`
 
-## Run APP in EC2
+## Run APP in AWS
 
 #### EC2
 
