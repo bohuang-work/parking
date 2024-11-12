@@ -62,7 +62,9 @@ bohuang910407/fastapi-parking:latest
 
 ## start grafana in local k8s
 
-1. run helm install: `helm install -n monitoring prometheus prometheus-community/kube-prometheus-stack -f values.yaml`
-2. port forward: `kubectl port-forward -n monitoring grafana-fcc55c57f-fhjfr 3000:3000`
+1. run helm install:
+   `helm install -n monitoring prometheus prometheus-community/kube-prometheus-stack -f values.yaml`
+2. port forward:
+   `kubectl port-forward -n monitoring grafana-fcc55c57f-fhjfr 3000:3000`
 
 <img src="https://github.com/bohuang-work/parking/blob/main/img/grafana.png" alt="Grafana Dashboard" width="600"/>
