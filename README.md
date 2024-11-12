@@ -6,6 +6,8 @@
 ![SQLite](https://img.shields.io/badge/SQLite-3.36.0-brightgreen?style=for-the-badge)
 ![AWS](https://img.shields.io/badge/AWS-Cloud-brightgreen?style=for-the-badge)
 ![Terraform](https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
 
 ## Introduction
 
@@ -57,3 +59,10 @@ bohuang910407/fastapi-parking:latest
 
 1. `cd terraform/lambda`
 2. `terraform apply`
+
+## start grafana in local k8s
+
+1. run helm install: `helm install -n monitoring prometheus prometheus-community/kube-prometheus-stack -f values.yaml`
+2. port forward: `kubectl port-forward -n monitoring grafana-fcc55c57f-fhjfr 3000:3000`
+
+<img src="https://github.com/bohuang-work/parking/blob/main/img/grafana.png" alt="Grafana Dashboard" width="600"/>

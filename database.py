@@ -27,9 +27,7 @@ else:
     )  # Change this to your RDS endpoint
     POSTGRES_DB = os.getenv("POSTGRES_DB", "parkingdb")
 
-    SQLALCHEMY_DATABASE_URL = (
-        f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:5432/{POSTGRES_DB}"
-    )
+    SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:5432/{POSTGRES_DB}"
     engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # Create a session maker
