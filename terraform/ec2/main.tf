@@ -203,7 +203,7 @@ resource "aws_db_instance" "postgres" {
   engine_version         = "16.3"         # Use the specified version
   instance_class         = "db.t4g.micro" # Ensure this is a free tier option
   identifier             = "parking-db"
-  username               = "dbadmin"        # Change to your desired username
+  username               = "admin"        # Change to your desired username
   password               = "adminAdmin123!" # Change to a secure password
   db_name                = "parkingdb"
   skip_final_snapshot    = true

@@ -136,7 +136,7 @@ resource "aws_db_instance" "postgres" {
   engine_version         = "16.3"         # Adjust the version if needed
   instance_class         = "db.t4g.micro" # Suitable for testing
   identifier             = "parking-db"
-  username               = "dbadmin"        # Set your DB username
+  username               = "admin"        # Set your DB username
   password               = "adminAdmin123!" # Set your DB password securely
   db_name                = "parkingdb"
   skip_final_snapshot    = true
@@ -216,10 +216,10 @@ resource "aws_lambda_function" "parking_lambda" {
   environment {
     variables = {
       DATABASE_ENV = "aws"
-      DB_ENDPOINT  = aws_db_instance.postgres.address
-      DB_NAME      = aws_db_instance.postgres.db_name
-      DB_USERNAME  = "dbadmin"
-      DB_PASSWORD  = "adminAdmin123!"
+      POSTGRES_HOST  = aws_db_instance.postgres.address
+      POSTGRES_DB      = aws_db_instance.postgres.db_name
+      POSTGRES_USER  = "admin"
+      POSTGRES_PASSWORD  = "adminAdmin123!"
     }
   }
 

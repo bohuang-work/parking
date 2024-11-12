@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+data:
+  POSTGRES_DB: parkingdb
+  POSTGRES_HOST: postgres  # This will be the name of the Service we create for PostgreSQL
+  POSTGRES_PORT: "5432"    # Port PostgreSQL listens on

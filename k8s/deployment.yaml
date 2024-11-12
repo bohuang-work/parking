@@ -5,7 +5,7 @@ metadata:
   labels:
     app: parking-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: parking-app
@@ -23,15 +23,44 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "500m"
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_DB
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_PORT
+            - name: DATABASE_ENV
+              value: "k8s"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: parking-service
 spec:
-  type: LoadBalancer # Use LoadBalancer or NodePort based on your k3d setup
-  ports:
-    - port: 80 # External port to access the service
-      targetPort: 8000 # The port where the FastAPI app is listening inside the container
   selector:
     app: parking-app
+  ports:
+    - protocol: TCP
+      port: 8000        # The port the service will be exposed on within the cluster
+      targetPort: 8000 # The port the FastAPI app listens on
+  type: ClusterIP     # Internal service (since ingress will expose it externally)
